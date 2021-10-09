@@ -1,6 +1,6 @@
 package com.vti.repository;
 
-import com.vti.entity.ResetPasswordToken;
+import com.vti.entity.authen.ResetPasswordToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -17,7 +17,7 @@ INSERT INTO `Account`	(`AccountID`, `Email`				, `Username`	, `password`								
 VALUES					(    1		, 'trantuan@gmail.com'	, 'trantuan01'	, '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', 'Tuan'		, 'Tran Anh'	,   NULL	,'Admin'	, '2021-09-28 20:16:40'	),
 						(    2		, 'elonmusk@gmail.com'	, 'elonmusk'	, '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', 'Elon'		, 'Musk'		,   NULL	, 'Admin'	,'2021-09-28 20:17:32'	),
 						(    3		, 'onyxzt123@gmail.com'	, 'onyxzt123'	, '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', 'Truong'		, 'Bui Duc'		,   NULL	, 'User'	,'2021-04-28 20:18:06'	),
-						(    4		, 'thanglong98@gmail.com', 'thanglong98', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', 'Long'		, 'Tran Thang'	,   NULL	, 'User'	,'2021-05-28 20:18:43'	),
+						(    4		, 'thanglong98@gmail.com', 'thanglong98', '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', 'Long'		, 'Tran Thang'	,   NULL	, 'Manager'	,'2021-05-28 20:18:43'	),
 						(    5		, 'va29042000@gmail.com', 'va29042000'	, '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', 'Anh'			, 'Truong Viet'	,   NULL	, 'User'	,'2021-06-28 20:19:36'	),
 						(    6		, 'NPHang@gmail.com'	, 'nphang'		, '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', 'Hang'		, 'Nguyen Phuong',  NULL	, 'User'	,'2021-04-28 20:18:06'	),
 						(    7		, 'phamnhatvuong@gmail.com', 'pnvuong'	, '$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi', 'Vuong'		, 'Pham Nhat'	,   NULL	, 'User'	,'2021-05-28 20:18:43'	),

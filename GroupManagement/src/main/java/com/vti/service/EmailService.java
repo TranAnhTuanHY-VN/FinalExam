@@ -1,5 +1,6 @@
 package com.vti.service;
 
+import com.vti.config.resourceproperties.ServerProperty;
 import com.vti.entity.Account;
 import com.vti.repository.RegistrationAccountTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class EmailService implements IEmailService {
 	@Autowired
 	private JavaMailSender mailSender;
 
+	@Autowired
+	private ServerProperty serverProperty;
+
 	/*
 	 * @see
 	 * com.vti.service.IEmailService#sendRegistrationUserConfirm(java.lang.String)
@@ -27,9 +31,11 @@ public class EmailService implements IEmailService {
 	public void sendRegistrationUserConfirm(String email) {
 
 		Account account = accountService.findAccountByEmail(email);
-		String token = registrationAccountTokenRepository.findByUserId(account.getId());
+		String token = registrationAccountTokenRepository.findByAccountId(account.getId());
 
-		String confirmationUrl = "http://localhost:8080/api/v1/Accounts/activeAccount?token=" + token;
+		//String confirmationUrl = "http://localhost:8080/api/v1/accounts/activeAccount?token=" + token;
+
+		String confirmationUrl = serverProperty.getUrl() +  "/api/v1/accounts/activeAccount?token=" + token;
 
 		String subject = "Xác Nhận Đăng Ký Account";
 		String content = "Bạn đã đăng ký thành công. Click vào link dưới đây để kích hoạt tài khoản \n"

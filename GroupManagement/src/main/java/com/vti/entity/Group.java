@@ -1,5 +1,8 @@
 package com.vti.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -7,6 +10,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+
+@Getter
+@Setter
+@NoArgsConstructor  // contructor k tham số
 @Entity
 @Table(name = "`Group`")
 public class Group implements Serializable {
@@ -29,7 +36,7 @@ public class Group implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "CreatorID",nullable = false,updatable = false)
-    private Account creator;
+    private Account creator;    // tên giống mình chỉ bổ sung thông tin thôi
 
     @Column(name = "ModifiedDate", updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
@@ -41,66 +48,4 @@ public class Group implements Serializable {
     @CreationTimestamp
     private Date createDate;
 
-    public Group() {
-    }
-
-    public Group(String name) {
-        this.name = name;
-    }
-
-    public short getId() {
-        return id;
-    }
-
-    public void setId(short id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getMemberNum() {
-        return memberNum;
-    }
-
-    public void setMemberNum(int memberNum) {
-        this.memberNum = memberNum;
-    }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public Account getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Account creator) {
-        this.creator = creator;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
 }

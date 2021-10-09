@@ -1,7 +1,11 @@
-package com.vti.event;
+package com.vti.config.event;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
+@Getter
+@Setter
 public class OnSendRegistrationUserConfirmViaEmailEvent extends ApplicationEvent {
 
 	private static final long serialVersionUID = 1L;
@@ -10,14 +14,6 @@ public class OnSendRegistrationUserConfirmViaEmailEvent extends ApplicationEvent
 
 	public OnSendRegistrationUserConfirmViaEmailEvent(String email) {
 		super(email);
-		this.email = email;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
 		this.email = email;
 	}
 

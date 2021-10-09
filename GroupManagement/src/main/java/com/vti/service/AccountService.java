@@ -2,20 +2,13 @@ package com.vti.service;
 
 import com.vti.entity.Account;
 import com.vti.entity.AccountStatus;
-import com.vti.entity.Group;
-import com.vti.entity.RegistrationAccountToken;
-import com.vti.event.OnSendRegistrationUserConfirmViaEmailEvent;
-import com.vti.form.*;
+import com.vti.entity.authen.RegistrationAccountToken;
+import com.vti.config.event.OnSendRegistrationUserConfirmViaEmailEvent;
 import com.vti.repository.IAccountRepository;
-import com.vti.repository.IGroupRepository;
 import com.vti.repository.RegistrationAccountTokenRepository;
-import com.vti.specification.AccountSpecification;
-import com.vti.specification.GroupSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,41 +16,35 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-
+// như kiểu cái này nhé nó có @Service đúg kk là nó sẽ đưa vào spring iOc
+// kiểu nó quản lý hộ mình ấy thì khi dùng thằng khác có @autowired thì bản thân cx phải do spring quản lý
+//
 @Transactional
-@Service
+@Service    // k có cái này thì cái repo autowired nó k hiểu đây có phải class của spring k để nhúng code vào
 public class AccountService implements IAccountService {
     @Autowired
     private IAccountRepository repository;
-
+    // sang ben jwt trc
     @Autowired
     private RegistrationAccountTokenRepository registrationAccountTokenRepository;
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Value("${registration.token.expired-time}")    // gần giống cái này nhưng cái này nó chỉ lấy theo cả 1 key thôi
+    private long registrationPasswordTokenExpiredTime;
+
+
     @Override
     public List<Account> getAllAccounts() {
         return repository.findAll();
-    }
-
-    private void createNewRegistrationUserToken(Account account) {
-
-        // create new token for confirm Registration
-        final String newToken = UUID.randomUUID().toString();
-        RegistrationAccountToken token = new RegistrationAccountToken(newToken, account);
-
-        registrationAccountTokenRepository.save(token);
-    }
-
-    private void sendConfirmUserRegistrationViaEmail(String email) {
-        eventPublisher.publishEvent(new OnSendRegistrationUserConfirmViaEmailEvent(email));
     }
 
     @Override
@@ -74,7 +61,7 @@ public class AccountService implements IAccountService {
 
         repository.save(account);
 
-        // remove Registration User Token
+        // xong nó xóa luôn đây này tại vì mình cx k cần dùng lại
         registrationAccountTokenRepository.deleteById(registrationAccountToken.getId());
     }
 
@@ -98,5 +85,29 @@ public class AccountService implements IAccountService {
         return account;
     }
 
+    @Override
+    public void createAccount(Account account) {
+        // create user
+        account.setPassword(passwordEncoder.encode(account.getPassword())); // cái password nãy
+        repository.save(account);
 
+        // create new user registration token
+        createNewRegistrationUserToken(account);
+
+        // send email to confirm
+        sendConfirmUserRegistrationViaEmail(account.getEmail());
+    }
+
+    private void createNewRegistrationUserToken(Account account) {
+
+        // create new token for confirm Registration
+        final String newToken = UUID.randomUUID().toString();
+        RegistrationAccountToken token = new RegistrationAccountToken(newToken, account, registrationPasswordTokenExpiredTime);
+
+        registrationAccountTokenRepository.save(token);
+    }
+
+    private void sendConfirmUserRegistrationViaEmail(String email) {
+        eventPublisher.publishEvent(new OnSendRegistrationUserConfirmViaEmailEvent(email));
+    }
 }

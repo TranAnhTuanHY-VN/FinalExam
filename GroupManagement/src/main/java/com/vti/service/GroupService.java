@@ -76,7 +76,8 @@ public class GroupService implements IGroupService {
         //get author
         Account creator = accountRepository.findById(form.getCreatorID()).get();
 
-        Group group = new Group(form.getName());
+        Group group = new Group();
+        group.setName(form.getName());
         group.setCreator(creator);
 
         groupRepository.save(group);

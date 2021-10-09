@@ -29,21 +29,13 @@ CREATE TABLE `Account`(
 
 
 -- Create table Registration_User_Token
-DROP TABLE IF EXISTS 	`Registration_User_Token`;
-CREATE TABLE IF NOT EXISTS `Registration_User_Token` ( 	
+DROP TABLE IF EXISTS 	`Token`;
+CREATE TABLE IF NOT EXISTS `Token` ( 	
 	id 				INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	`token`	 		CHAR(36) NOT NULL UNIQUE,
 	`user_id` 		SMALLINT UNSIGNED NOT NULL,
-	`expiryDate` 	DATETIME NOT NULL
-);
-
--- Create table Reset_Password_Token
-DROP TABLE IF EXISTS 	`Reset_Password_Token`;
-CREATE TABLE IF NOT EXISTS `Reset_Password_Token` ( 	
-	id 				INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	`token`	 		CHAR(36) NOT NULL UNIQUE,
-	`user_id` 		SMALLINT UNSIGNED NOT NULL,
-	`expiryDate` 	DATETIME NOT NULL
+	`expiryDate` 	DATETIME NOT NULL,
+    `type`			Varchar(50)	
 );
 
                                                                             

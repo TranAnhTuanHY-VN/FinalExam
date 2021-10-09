@@ -1,4 +1,4 @@
-package com.vti.event;
+package com.vti.config.event;
 
 import com.vti.service.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
