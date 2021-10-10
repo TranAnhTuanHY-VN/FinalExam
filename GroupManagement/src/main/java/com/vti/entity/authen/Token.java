@@ -8,17 +8,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-// cx như bthg thôi lát sửa lại db
 @Entity
 @Table(name = "`Token`")
 @Data
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)   // kế t hừa
-@DiscriminatorColumn(name = "Type", discriminatorType = DiscriminatorType.STRING)   // cái này nó như
-// kiểu class kế thừa thì phải có cái gì đó phân biệt giữa class con ấy
-//name = "Type" cái này dưới db , discriminatorType này là phân biệt dạng string
-// như kiểu type refreshtoken vs registoken ấy
-// k phải 1 2 3 đau
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)//Kế thừa
+@DiscriminatorColumn(name = "Type", discriminatorType = DiscriminatorType.STRING)
 public class Token implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -38,10 +33,9 @@ public class Token implements Serializable {
     @Column(name = "`expiryDate`", nullable = false)
     private Date expiryDate;
 
-    // cái time này nên cấu hình file properties ấy dùng để thế này vì k chỉnh đc
     public Token(String token, Account account, long expiryTime) {
         this.token = token;
         this.account = account;
-        expiryDate = new Date(System.currentTimeMillis() + expiryTime);
+        expiryDate = new Date(System.currentTimeMillis() + expiryTime);//expiryTime đã được cấu hình trong file properties
     }
 }

@@ -1,5 +1,6 @@
 package com.vti.config.security;
 
+import com.google.common.collect.ImmutableList;
 import com.vti.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,17 +11,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-// mình dùng thằng này vì nó có @Component spring nó đọc đc cấu hình trong class
-// muốn có nhiều thawg do spring quản lý mà mình custom thì dùng @Bean
-// Bean nó như cấu hình cho method còn cái Component , service là cả class
-// mình mượn thằng này cấu hình hộ
 @Component
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;    // như này nó hiểu đc
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private IAccountService service;
@@ -28,11 +28,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(service).passwordEncoder(passwordEncoder);
-        // a duy new chỗ này là nó đang bị phụ thuộc ấy
-        // như kiểu cái encode này nhé nếu mình đki tkhoan nó phải mã hóa đúg k
-        // thì k phải mỗi chỗ này dùng mà service cx dùng
-        // mình cấu hình thành Bean để các thành phần spring nó hiểu để dùng lại đc
-        // class k thì nó k hiểu ất
     }
 
     @Override
@@ -40,6 +35,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .cors().and()
                 .authorizeRequests()
+                .antMatchers("/api/v1/login").anonymous()
                 .antMatchers("/api/v1/accounts/**").permitAll()
                 .antMatchers("/api/v1/files/**").permitAll()
                 .antMatchers("/api/v1/groups/**").hasAnyAuthority("Admin","Manager")
@@ -56,15 +52,25 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         UsernamePasswordAuthenticationFilter.class);
     }
 
-    // cấu hình tí nó vào đây nó đọc đc thì cái service bên kia mới hiểu là của spring để nhúng code vào
-    @Bean    // chỉ dùng cho method thôi
+
+    @Bean
     public JWTAuthenticationFilter JWTAuthenticationFilter() throws Exception {
         return new JWTAuthenticationFilter("/api/v1/login", authenticationManager());
-        // cài này nó lquan sercurity thooii vứt lại bên kia
     }
 
     @Bean
     public JWTAuthorizationFilter JWTAuthorizationFilter() {
         return new JWTAuthorizationFilter();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedMethods(ImmutableList.of("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        configuration.applyPermitDefaultValues();
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

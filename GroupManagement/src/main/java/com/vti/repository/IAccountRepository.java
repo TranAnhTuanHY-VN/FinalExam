@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IAccountRepository extends JpaRepository<Account,Short>, JpaSpecificationExecutor<Account> {
+public interface IAccountRepository extends JpaRepository<Account,Integer>, JpaSpecificationExecutor<Account> {
     Account findByUsername(String username);
 
 //    public boolean existsByUserName(String username);

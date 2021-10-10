@@ -92,7 +92,8 @@ function getListGroups() {
         contentType: "application/json",//type of body(json, xml ,text)
         dataType: 'json',//datatype return
         beforeSend: function (xhr){
-            xhr.setRequestHeader("Authorization","Basic " + btoa(storage.getItem("USERNAME") + ":" + storage.getItem("PASSWORD")));
+            console.log(storage.getItem("TOKEN"))
+            xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));        
         },
         success: function(data, textStatus, xhr) {
              // reset list employees
@@ -356,7 +357,7 @@ function addGroup(){
         contentType: "application/json",//type of body(json, xml ,text)
         dataType: 'json',//datatype return
         beforeSend: function (xhr){
-            xhr.setRequestHeader("Authorization","Basic " + btoa(storage.getItem("USERNAME") + ":" + storage.getItem("PASSWORD")));
+            xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));        
         },
         success: function(data, textStatus, xhr) {
              if(data==true){
@@ -374,7 +375,7 @@ function addGroup(){
                     contentType: "application/json",//type of body
                     //datatype: json, datatype return
                     beforeSend: function (xhr){
-                        xhr.setRequestHeader("Authorization","Basic " + btoa(storage.getItem("USERNAME") + ":" + storage.getItem("PASSWORD")));
+                        xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));
                     },
                     success: function(data,textStatus,xhr) {
                         console.log(data);

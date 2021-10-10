@@ -1,4 +1,6 @@
-/*============================== INSERT DATABASE =======================================*/
+USE FinalProject;
+/*=================
+============= INSERT DATABASE =======================================*/
 /*======================================================================================*/
 -- Add data `Group`
 INSERT INTO `Group`	( `GroupID`	, `GroupName`		, `MemberNum`	, `CreatorID`	, `CreateDate`			,`ModifiedDate`) 

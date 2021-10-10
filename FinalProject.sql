@@ -33,9 +33,10 @@ DROP TABLE IF EXISTS 	`Token`;
 CREATE TABLE IF NOT EXISTS `Token` ( 	
 	id 				INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	`token`	 		CHAR(36) NOT NULL UNIQUE,
-	`user_id` 		SMALLINT UNSIGNED NOT NULL,
+	AccountID     INT UNSIGNED NOT NULL,
 	`expiryDate` 	DATETIME NOT NULL,
-    `type`			Varchar(50)	
+    `type`			Varchar(50),
+    FOREIGN KEY (AccountID) REFERENCES  `Account`(AccountID)
 );
 
                                                                             

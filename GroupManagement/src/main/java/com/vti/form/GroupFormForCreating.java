@@ -1,27 +1,13 @@
 package com.vti.form;
 
-public class GroupFormForCreating {
+import lombok.Data;
 
+import javax.validation.constraints.Pattern;
+
+@Data
+public class GroupFormForCreating {
     private String name;
 
-    private short creatorID;
+    private int creatorID;
 
-    public GroupFormForCreating() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public short getCreatorID() {
-        return creatorID;
-    }
-
-    public void setCreatorID(short creatorID) {
-        this.creatorID = creatorID;
-    }
 }
