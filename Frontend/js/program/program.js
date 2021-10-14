@@ -14,24 +14,46 @@ $(function(){
         window.location.replace("http://127.0.0.1:5502/html/login.html");
     }
     document.getElementById("fullName").innerHTML = storage.getItem("FULL_NAME");
-    if(storage.getItem("ROLE") == "User"){
-        document.getElementById("viewListAccount").style.display = "none";
+    if(storage.getItem("ROLE") === "User"){
+        // document.getElementById("viewListAccount").style.display = "none";
         document.getElementById("viewListGroup").style.display = "none";
     }
 });
 
 function clickHomePage(){
+    if(!isLogin()){
+        //redirect to login page
+        window.location.replace("http://127.0.0.1:5502/html/login.html");
+    }
     $(".container-fluid").load("home.html");
 }
 
 function clickAccountManagement(){
-    $(".container-fluid").load("tables.html");
+    if(!isLogin()){
+        //redirect to login page
+        window.location.replace("http://127.0.0.1:5502/html/login.html");
+    }
+    $(".container-fluid").load("accountList.html");
 
 }
 
 function clickGroupManagement(){
+    if(!isLogin()){
+        //redirect to login page
+        window.location.replace("http://127.0.0.1:5502/html/login.html");
+    }
     $(".container-fluid").load("groupList.html",function(){
         buildTable();
+    });
+}
+
+function openProfile(){
+    if(!isLogin()){
+        //redirect to login page
+        window.location.replace("http://127.0.0.1:5502/html/login.html");
+    }
+    $(".container-fluid").load("accountInfo.html",function(){
+        document.getElementById("firstname").value = storage.getItem("FULL_NAME");
     });
 }
 
@@ -45,8 +67,9 @@ function isLogin(){
 function logout(){
     storage.removeItem("ID");
     storage.removeItem("FULL_NAME");
-    storage.removeItem("USERNAME");
-    storage.removeItem("PASSWORD");
+    storage.removeItem("ROLE");
+    storage.removeItem("TOKEN");
+    storage.removeItem("REFRESH_TOKEN");
 
     //redirect to login page
     window.location.replace("http://127.0.0.1:5502/html/login.html");
@@ -92,7 +115,6 @@ function getListGroups() {
         contentType: "application/json",//type of body(json, xml ,text)
         dataType: 'json',//datatype return
         beforeSend: function (xhr){
-            console.log(storage.getItem("TOKEN"))
             xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));        
         },
         success: function(data, textStatus, xhr) {
@@ -409,7 +431,7 @@ function openUpdateModal(id){
         contentType: "application/json",//type of body(json, xml ,text)
         dataType: 'json',//datatype return
         beforeSend: function (xhr){
-            xhr.setRequestHeader("Authorization","Basic " + btoa(storage.getItem("USERNAME") + ":" + storage.getItem("PASSWORD")));
+            xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));  
         },
         success: function(data, textStatus, xhr) {
             // success
@@ -479,7 +501,7 @@ function updateGroup(){
         contentType: "application/json",//type of body(json, xml ,text)
         dataType: 'json',//datatype return
         beforeSend: function (xhr){
-            xhr.setRequestHeader("Authorization","Basic " + btoa(storage.getItem("USERNAME") + ":" + storage.getItem("PASSWORD")));
+            xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));  
         },
         success: function(data, textStatus, xhr) {
             if(data==true){
@@ -496,7 +518,7 @@ function updateGroup(){
                     contentType: "application/json",//type of body(json, xml ,text)
                     //datatype "json",//datatype return
                     beforeSend: function (xhr){
-                        xhr.setRequestHeader("Authorization","Basic " + btoa(storage.getItem("USERNAME") + ":" + storage.getItem("PASSWORD")));
+                        xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));  
                     },
                     success: function(data, textStatus, xhr) {
                         console.log(data);
@@ -545,7 +567,7 @@ function deleteGroup(id){
         url: 'http://localhost:8080/api/v1/groups/' + id,
         type: 'DELETE',
         beforeSend: function (xhr){
-            xhr.setRequestHeader("Authorization","Basic " + btoa(storage.getItem("USERNAME") + ":" + storage.getItem("PASSWORD")));
+            xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));  
         },
         success: function(result) {
 
@@ -620,7 +642,7 @@ function deleteAllGroup(){
             url: 'http://localhost:8080/api/v1/groups?ids=' + ids,
             type: 'DELETE',
             beforeSend: function (xhr){
-                xhr.setRequestHeader("Authorization","Basic " + btoa(storage.getItem("USERNAME") + ":" + storage.getItem("PASSWORD")));
+                xhr.setRequestHeader("Authorization", "Bearer " + storage.getItem("TOKEN"));  
             },
             success: function(result) {
                 // success

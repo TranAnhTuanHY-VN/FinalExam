@@ -22,14 +22,8 @@ public class FileController {
     @Autowired
     private IFileService fileService;
 
-    @PostMapping(value = "/image")  // có thể thêm id vào Request param này cx đc logic k khó lắm oke a để e thử làm
+    @PostMapping(value = "/image")
     public ResponseEntity<?> upLoadImage(@RequestParam(name = "image") MultipartFile image) throws IOException, URISyntaxException {
-        // lm thử xem a cx chưa lm mà test postman ngon là ok r
-        //Vâng...mà cái reset pasword  thì khó k a nhỉ
-        // a chưa lm mà a nghĩ nó cx i sì cái regis
-        //Vâng a....thế để em xen lại code rồi e làm thêm ạ
-        // ok cứ đọc logic đi chưa cần lm FE đâu
-        //Vâng ạ thôi a out nhé kVhaasna lgok
         if (!new FileManager().isTypeFileImage(image)) {
             return new ResponseEntity<>("File must be image!", HttpStatus.UNPROCESSABLE_ENTITY);
         }

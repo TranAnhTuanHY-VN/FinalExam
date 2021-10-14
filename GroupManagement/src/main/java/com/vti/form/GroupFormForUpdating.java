@@ -1,17 +1,11 @@
 package com.vti.form;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class GroupFormForUpdating {
 
     private String name;
-
-    public GroupFormForUpdating() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

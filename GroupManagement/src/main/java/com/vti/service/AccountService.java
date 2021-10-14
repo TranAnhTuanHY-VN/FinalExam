@@ -20,15 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
-// như kiểu cái này nhé nó có @Service đúg kk là nó sẽ đưa vào spring iOc
-// kiểu nó quản lý hộ mình ấy thì khi dùng thằng khác có @autowired thì bản thân cx phải do spring quản lý
-//
 @Transactional
-@Service    // k có cái này thì cái repo autowired nó k hiểu đây có phải class của spring k để nhúng code vào
+@Service
 public class AccountService implements IAccountService {
     @Autowired
     private IAccountRepository repository;
-    // sang ben jwt trc
+
     @Autowired
     private RegistrationAccountTokenRepository registrationAccountTokenRepository;
 
@@ -38,7 +35,7 @@ public class AccountService implements IAccountService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Value("${registration.token.expired-time}")    // gần giống cái này nhưng cái này nó chỉ lấy theo cả 1 key thôi
+    @Value("${registration.token.expired-time}")
     private long registrationPasswordTokenExpiredTime;
 
 
@@ -61,7 +58,6 @@ public class AccountService implements IAccountService {
 
         repository.save(account);
 
-        // xong nó xóa luôn đây này tại vì mình cx k cần dùng lại
         registrationAccountTokenRepository.deleteById(registrationAccountToken.getId());
     }
 
@@ -80,7 +76,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account getAccountByUsername(String username) {
-        Account account = repository.findByUsername(username); // cái này nó trả null
+        Account account = repository.findByUsername(username);
 
         return account;
     }

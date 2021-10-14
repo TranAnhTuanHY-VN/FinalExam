@@ -34,9 +34,9 @@ public class GroupController {
             ) {
         //Convert entities--> dtos
         Page<Group> entitiesPage = service.getAllGroups(pageable, search, filter);
-        Page<GroupDto> dtoPage = entitiesPage.map(entity -> {// vt kiểu java 8 k cần override đâu
-            GroupDto dto = modelMapper.map(entity, GroupDto.class); // class nó convert sang vs data đưa vào
-            return dto;// check xem các thuộc tính tên giống nhau chưa giống về cách viết ấy cả chữ hoa cx tính
+        Page<GroupDto> dtoPage = entitiesPage.map(entity -> {
+            GroupDto dto = modelMapper.map(entity, GroupDto.class);
+            return dto;
         });
         return new ResponseEntity<>(dtoPage, HttpStatus.OK);
     }
@@ -77,5 +77,4 @@ public class GroupController {
         service.deleteGroups(ids);
         return new ResponseEntity<String>("Delete Successfully!", HttpStatus.OK);
     }
-
 }

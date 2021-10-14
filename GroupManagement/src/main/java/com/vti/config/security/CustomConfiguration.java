@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration // muốn cấu hình cái gì cho hết vào đây để spring
+@Configuration
 public class CustomConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -14,6 +14,6 @@ public class CustomConfiguration {
     }
     @Bean
     public ModelMapper modelMapper(){
-        return new ModelMapper();   // cấu hình cho nó nhúng đc
+        return new ModelMapper();
     }
 }

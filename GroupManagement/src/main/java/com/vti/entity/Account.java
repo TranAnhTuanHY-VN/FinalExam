@@ -21,7 +21,7 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "Email",length = 50, nullable = false,unique = true)
+    @Column(name = "Email",length = 50, nullable = false)
     private String email;
 
     @Column(name = "Username",length = 50, nullable = false,unique = true)
@@ -58,5 +58,4 @@ public class Account implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "`Status`")
     private AccountStatus status = AccountStatus.NOT_ACTIVE;
-
 }

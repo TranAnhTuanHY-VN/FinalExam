@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 
 
 @Entity
-@DiscriminatorValue("RegistrationAccountToken")    // cái này là phân biệt này lát nó lưu vào db
+@DiscriminatorValue("RegistrationAccountToken")
 @NoArgsConstructor
 public class RegistrationAccountToken extends Token {
 

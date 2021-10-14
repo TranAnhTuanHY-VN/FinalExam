@@ -7,7 +7,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("ResetPasswordToken")    // cái này là phân biệt này lát nó lưu vào db
+@DiscriminatorValue("ResetPasswordToken")
 @NoArgsConstructor
 public class ResetPasswordToken extends Token {
     public ResetPasswordToken(String token, Account account, long expiryTime) {

@@ -36,8 +36,6 @@ function login(){
     $.ajax({
         url: 'http://localhost:8080/api/v1/login',
         type: 'POST',
-        // contentType: "application/json",//type of body(json, xml ,text)
-        // dataType: 'json',//datatype return
         data:{
             username:username,
             password:password
@@ -45,31 +43,20 @@ function login(){
         success: function(data, textStatus, xhr) {
             console.log(data);
             // save remember me
-            // var isRememberMe = document.getElementById("remember-me").checked;
-            // storage.saveRememberMe(isRememberMe);
-            // console.log("hehe");
+            var isRememberMe = document.getElementById("remember-me").checked;
+            storage.saveRememberMe(isRememberMe);
             // //save data to storage
-            // storage.setItem("ID",data.id);
-            // storage.setItem("FULL_NAME",data.fullName);
-            // storage.setItem("USERNAME",username);
-            // storage.setItem("PASSWORD",password);
-            // storage.setItem("ROLE",data.role);
             storage.setItem("ID", data.id);
             storage.setItem("FULL_NAME", data.fullName);
-            //storage.setItem("USERNAME", username);
-            //storage.setItem("PASSWORD", password);
             storage.setItem("ROLE", data.role);
             storage.setItem("TOKEN", data.token);
             storage.setItem("REFRESH_TOKEN", data.refreshToken);
-            
+            storage.setItem("STATUS", data.status);
             //redirect to home page
             window.location.replace("http://127.0.0.1:5502/html/index.html")
         },
         error(jqXHR, textStatus, errorThrown){
             if(jqXHR.status == 401){
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
                 showNameErrorMessage("Login fail!")
             }else{
                 console.log(jqXHR);

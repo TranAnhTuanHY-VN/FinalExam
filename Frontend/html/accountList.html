@@ -1,0 +1,131 @@
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">Account Management</h5>
+    </div>
+
+    <div class="row" style="margin-left: 10px;">
+      <div class="col-md-4" style="margin-top: 5px;margin-bottom:10px;">
+       <span>Min Create Date:</span> <input type="date" name="minCreateDate" id="minCreateDate" onchange="changeMinCreateDate(event)">
+      </div>
+      <div class="col-md-4 offset-md-4" style="margin-top: 5px;margin-bottom:10px;">
+        <!-- <button type="button" class="btn btn-info add-new" data-toggle="modal" onclick="openAddModal()">
+          <i class="fa fa-plus"></i> Add New
+        </button> -->
+      </div>
+
+    </div>
+    <div class="row" style="margin-left: 10px;">
+      <div class="col-md-4" style="margin-top: 5px;margin-bottom:10px;">
+      <span>Max Create Date:</span><input type="date" name="maxCreateDate" id="maxCreateDate" onchange="changeMaxCreateDate(event)">
+      </div>
+      <div class="col-md-4 offset-md-4" style="margin-top: 5px;margin-bottom:10px;">
+        <button type="button" class="btn btn-info delete-all" data-toggle="modal" onclick="deleteAllGroup()"> 
+          <i class="far fa-trash-alt"></i> Delete All
+        </button> 
+      </div>
+    </div>
+
+    <div class="row" style="margin-left: 10px;">
+      <div class="col-8">
+        <input type="text" onkeyup="handleKeyupEventForSearching(event)" id="input-search-groups" placeholder="Search for Group names or Creator.." title="Type in a name">
+        <button type="button" id= "button-search-groups" onclick="handleSearchGroup()"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="col-4">
+       <button type="button" class="btn btn-info reset-table" onclick="refreshTable()"><i class="fas fa-sync-alt"></i> Refresh Table</button>
+      </div>
+    </div>
+    
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>
+                    <input type="checkbox" name="checkbox-all" id="checkbox-all" onclick="onChangeCheckboxAll()">
+                  </th>
+                  <th>STT         </th>
+                  <th>First Name        <i class="fas fa-sort" id="heading-firstname" onclick="changeSort('firstname')"></i></th>
+                  <th>Last Name     <i class="fas fa-sort" id="heading-lastname" onclick="changeSort('lastname')"></i></th>
+                  <th>Email      <i class="fas fa-sort " id="heading-email" onclick="changeSort('email')"></i></th>
+                  <th>Username <i class="fas fa-sort " id="heading-username" onclick="changeSort('username')"></i></th>
+                  <th>Actions</i></th>
+                </tr>
+              </thead>
+              <tbody>
+            
+              </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+  <!-- Modal HTML -->
+  <div id="myModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Title</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <!-- Body -->
+        <div class="modal-body">
+          <div class="modal-container">
+            <input type="hidden" id="id" name="id" />
+
+            <label for="name" id="nameLabel"><b>Name Group</b></label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Enter Name"
+              required
+            />
+
+            <p style="color: red;" id="nameErrorMessage"></p>
+
+            <label for="creator" id="creatorLabel"><b>Creator</b></label>
+            <input
+              type="text"
+              name="creator"
+              id="creator"
+              disabled
+            />
+
+            <label for="createDate" id="createDateLabel"><b>Create Date</b></label>
+            <input
+              type="date"
+              name="createDate"
+              id="createDate"
+              disabled
+            />
+
+          </div>
+        </div>
+        <!-- Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary" onclick="save()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- success alert -->
+  <div class="alert alert-success" id="success-alert" style="display: none">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>Success! </strong>
+  </div>
+</div>
+<script src="../js/program/accountlist.js"></script>
